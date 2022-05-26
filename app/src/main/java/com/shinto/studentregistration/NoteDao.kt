@@ -1,25 +1,29 @@
 package com.shinto.studentregistration
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
-
-// 2
-// this is a class for crud operation
 @Dao
 interface NoteDao {
 
     //IF THERE IS ANY SAME ID THAT IS IGNORED
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(note: Note)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(note: Note)
 
     @Update
-    suspend fun update(note: Note)
+    fun update(note: Note)
 
     @Delete
-    suspend fun delete(note: Note)
+    fun delete(note: Note)
 
     @Query("Select * from notesTable order by id ASC")
+    fun getAllNotes(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notesTable WHERE Name LIKE:searchQuery")
+    fun searchDatabase(searchQuery: String): Flow<List<Note>>
+
 
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    fun upsertByReplacement(image: List<Note>)
@@ -34,5 +38,5 @@ interface NoteDao {
 //    fun delete(imageTest: Note)
 
     // lIve data is observe data our data is updated or not.
-    fun getAllNotes(): LiveData<List<Note>>
+
 }

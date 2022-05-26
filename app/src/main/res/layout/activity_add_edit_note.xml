@@ -1,53 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddEditNoteActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/txtHead"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName" />
+            android:hint="First Name"
+            app:helperText=""
+            app:helperTextTextColor="#F2E40F0F"
+            app:startIconContentDescription="emailicon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstEditxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/txtClass"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/classContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Class"
-            android:inputType="textPersonName" />
+            app:helperText=""
+            app:helperTextTextColor="#F2E40F0F"
+            app:startIconContentDescription="emailicon">
 
-        <EditText
-            android:id="@+id/txtDob"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/classEditxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dobContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Date Of birth"
-            android:inputType="textPersonName" />
+            android:hint="Date Of Birth"
+            app:helperText=""
+            app:helperTextTextColor="#F2E40F0F"
+            app:startIconContentDescription="emailicon">
 
-        <EditText
-            android:id="@+id/txtSchool"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dobEditxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/schoolContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="School"
-            android:inputType="textPersonName" />
+            app:helperText=""
+            app:helperTextTextColor="#F2E40F0F"
+            app:startIconContentDescription="emailicon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/schoolEditxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/btnUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/round_btn"
+        android:contentDescription="@string/app_name"
+        android:text="Registration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

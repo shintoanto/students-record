@@ -4,10 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+
 // 7
 class NoteRVAdapter(
     val context: Context,
@@ -18,10 +17,10 @@ class NoteRVAdapter(
     private val allNotes = ArrayList<Note>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val noteTv = itemView.findViewById<ImageView>(R.id.item_Image)
-        val rvTv=itemView.findViewById<CardView>(R.id.crd_view)
+        //  val noteTv = itemView.findViewById<ImageView>(R.id.item_Image)
+        //  val classStudent = itemView.findViewById<CardView>(R.id.classId)
         val timeTv = itemView.findViewById<TextView>(R.id.item_title)
-        val deleteTV = itemView.findViewById<ImageView>(R.id.item_delete)
+        val deleteTV = itemView.findViewById<TextView>(R.id.delete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,16 +39,16 @@ class NoteRVAdapter(
                 )
             )
         }
-        holder.rvTv.setOnClickListener {
-            noteClickInterface.onNoteClick(allNotes.get(position))
-        }
+//        holder.rvTv.setOnClickListener {
+//            noteClickInterface.onNoteClick(allNotes.get(position))
+//        }
     }
 
     override fun getItemCount(): Int {
-      return allNotes.size
+        return allNotes.size
     }
 
-    fun updateList (newList: List<Note>){
+    fun updateList(newList: List<Note>) {
         allNotes.clear()
         allNotes.addAll(newList)
         notifyDataSetChanged()

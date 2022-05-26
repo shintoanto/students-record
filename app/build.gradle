@@ -16,6 +16,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildFeatures {
+        viewBinding true
+    }
+
 
     buildTypes {
         release {
@@ -38,6 +42,7 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
+    implementation 'com.google.android.material:material:1.5.0'
 
     // Dependencies for working with Architecture components
     // You'll probably have to update the version numbers in build.gradle (Project)
@@ -68,4 +73,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+
+
+// LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+
 }

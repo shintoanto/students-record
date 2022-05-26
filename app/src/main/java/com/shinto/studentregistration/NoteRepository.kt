@@ -1,7 +1,10 @@
 package com.shinto.studentregistration
 
 // 4
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import kotlinx.coroutines.flow.Flow
 
 class NoteRepository(private val notesDao: NoteDao) {
 
@@ -11,11 +14,19 @@ class NoteRepository(private val notesDao: NoteDao) {
         notesDao.insert(note)
     }
 
-    suspend fun delete(note: Note){
+    suspend fun delete(note: Note) {
         notesDao.delete(note)
     }
 
-    suspend fun update(note:Note){
+    fun searchquery(searchQuery: String): Flow<List<Note>> {
+        Log.d("Res", "---repoFuncIsWorkin")
+        val r = notesDao.searchDatabase(searchQuery)
+        Log.d("Res","dataaaaaaa $r.toString()")
+        return r
+
+    }
+
+    suspend fun update(note: Note) {
         notesDao.update(note)
     }
 

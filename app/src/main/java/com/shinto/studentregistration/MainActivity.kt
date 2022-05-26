@@ -1,27 +1,37 @@
 package com.shinto.studentregistration
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.SearchView
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-// 6
+import com.shinto.studentregistration.databinding.ActivityMainBinding
+import kotlin.collections.ArrayList
+
+private lateinit var binding: ActivityMainBinding
+
 class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInterface {
+
     lateinit var noteRv: RecyclerView
-    lateinit var addFAB: FloatingActionButton
+
+
     lateinit var viewModel: NoteViewModel
+    // private val myAdapter by lazy { NoteRVAdapter() }
+
+    private lateinit var tempArraylist: ArrayList<List<Note>>
+    private lateinit var saveArraylist: ArrayList<List<Note>>
+    private lateinit var myAdapter: MyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         noteRv = findViewById(R.id.idRvNotes)
-        addFAB = findViewById(R.id.fabadnote)
         noteRv.layoutManager = LinearLayoutManager(this)
         val noteRVAdapter = NoteRVAdapter(this, this, this)
         noteRv.adapter = noteRVAdapter
@@ -29,36 +39,81 @@ class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInt
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(NoteViewModel::class.java)
-        viewModel.allNotes.observe(this, { list ->
+        viewModel.allNotes.observe(this) { list ->
             list?.let {
                 noteRVAdapter.updateList(it)
             }
-        })
-        addFAB.setOnClickListener{
-            val intent=Intent(this@MainActivity,AddEditNoteActivity::class.java)
-            startActivity(intent)
-//            this.finish()
         }
+        binding.fabadnote.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddEditNoteActivity::class.java)
+            startActivity(intent)
+        }
+
+        //   tempArraylist = arrayListOf<List<Note>>()
+
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("Res", "---onQueryTextSubmit$query")
+//                binding.searchView.clearFocus()
+//                if (larr.contains(query)) {
+//                    userAdapter.filter.filter(query)
+//                } else {
+//                    Toast.makeText(applicationContext, "not working", Toast.LENGTH_SHORT).show()
+//                }
+//                Log.d("Res", true.toString())
+//                return false
+                if (query != null) {
+                    getStudentData(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+//                tempArraylist.clear()
+//                val se = p0?.toLowerCase(Locale.getDefault())
+//                if (se?.isNotEmpty()!!) {
+//                    if (saveArraylist.contains(se))
+//                }
+//                return false
+                Log.d("Res", "---onQueryTextChange")
+                if (p0 != null) {
+                    getStudentData(p0)
+                }
+                return true
+            }
+
+        })
+    }
+
+    private fun getStudentData(query: String) {
+        val searchQuery = "%$query%"
+        Log.d("Res", "---getStudentData$searchQuery")
+        viewModel.searchDatabase(searchQuery).let{ list ->
+            list.let {
+                myAdapter.setData(it)
+            }
+        }
+
+
     }
 
     override fun onNoteClick(note: Note) {
-
-
-        val intent=Intent(this@MainActivity,AddEditNoteActivity::class.java)
-
-        intent.putExtra("noteType","Edit")
-        Log.d("mes",note.noteTitle)
-        intent.putExtra("noteTitle",note.noteTitle)
-        intent.putExtra("noteDescription",note.noteDescription)
-        intent.putExtra("notDob",note.noteDob)
-        intent.putExtra("noteSchool",note.noteSchool)
-        intent.putExtra("noteID",note.id)
-        Log.d("inte",intent.toString())
+        val intent = Intent(this@MainActivity, AddEditNoteActivity::class.java)
+        intent.putExtra("noteType", "Edit")
+        Log.d("mes", note.noteTitle)
+        intent.putExtra("noteTitle", note.noteTitle)
+        intent.putExtra("noteDescription", note.noteDescription)
+        intent.putExtra("notDob", note.noteDob)
+        intent.putExtra("noteSchool", note.noteSchool)
+        intent.putExtra("noteID", note.id)
+        Log.d("inte", intent.toString())
         startActivity(intent)
-       // this.finish()
     }
 
     override fun onDeleteIconClick(note: Note) {
         viewModel.deleteNote(note)
-        Toast.makeText(this,"${note.noteTitle}Deleted",Toast.LENGTH_LONG).show()    }
+        Toast.makeText(this, "${note.noteTitle}Deleted", Toast.LENGTH_LONG).show()
+    }
+
 }
