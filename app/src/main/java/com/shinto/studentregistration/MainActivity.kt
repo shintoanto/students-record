@@ -55,14 +55,6 @@ class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInt
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("Res", "---onQueryTextSubmit$query")
-//                binding.searchView.clearFocus()
-//                if (larr.contains(query)) {
-//                    userAdapter.filter.filter(query)
-//                } else {
-//                    Toast.makeText(applicationContext, "not working", Toast.LENGTH_SHORT).show()
-//                }
-//                Log.d("Res", true.toString())
-//                return false
                 if (query != null) {
                     getStudentData(query)
                 }
@@ -70,12 +62,6 @@ class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInt
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-//                tempArraylist.clear()
-//                val se = p0?.toLowerCase(Locale.getDefault())
-//                if (se?.isNotEmpty()!!) {
-//                    if (saveArraylist.contains(se))
-//                }
-//                return false
                 Log.d("Res", "---onQueryTextChange")
                 if (p0 != null) {
                     getStudentData(p0)
@@ -91,10 +77,10 @@ class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInt
         Log.d("Res", "---getStudentData$searchQuery")
         viewModel.searchDatabase(searchQuery).let{ list ->
             list.let {
+                myAdapter = MyAdapter()
                 myAdapter.setData(it)
             }
         }
-
 
     }
 
