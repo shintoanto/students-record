@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), NoteClickInterface, NoteClickDeleteInt
                 if (query != null) {
                     getStudentData(query)
                 }
+
                 return true
             }
 
